@@ -24,7 +24,7 @@ public class CuboElevador : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PrenderTexto(false);
+        PrenderTexto(true);
         Debug.Log("Mensaje Entrada");
         playerInteractuando = true;
     }
@@ -36,13 +36,23 @@ public class CuboElevador : MonoBehaviour
         playerInteractuando = false;
     }
 
-    void AbrirPuerta()
+    public void AbrirPuerta()
     {
         if (!puertaAbierta)
         {
-            texto.SetActive(false);
+            PrenderTexto(false);
             puertaAbierta = true;
             transform.position = transform.position + puntoFinal;
+        }
+    }
+
+    public void CerrarPuerta()
+    {
+        if (puertaAbierta)
+        {
+            puertaAbierta = false;
+            texto.SetActive(false);
+            transform.position = transform.position - puntoFinal;
         }
     }
 
