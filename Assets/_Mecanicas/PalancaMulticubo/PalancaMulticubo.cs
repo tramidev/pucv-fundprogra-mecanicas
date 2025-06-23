@@ -2,13 +2,12 @@ using UnityEngine;
 using TMPro;
 using UnityEditor;
 
-public class Palanca : MonoBehaviour
+public class PalancaMulticubo : MonoBehaviour
 {
-    public GameObject puerta;
+  
     public GameObject texto;
-    public bool puertaAbierta;
     bool enTrigger;
-    public CuboElevador cuboElevador;
+    public CuboElevador[] cubosElevadores;
     bool palancaPosicionOn;
     
     public Quaternion palancaIzquierda;
@@ -19,7 +18,6 @@ public class Palanca : MonoBehaviour
     void Start()
     {
         texto.SetActive(false);
-        puertaAbierta = false;
         enTrigger = false;
         pivote.rotation = palancaDerecha;
     }
@@ -45,15 +43,21 @@ public class Palanca : MonoBehaviour
 
     void AccionarPalanca()
     {
-        
         if (palancaPosicionOn)
         {
-            cuboElevador.CerrarPuerta();
+            for (int i = 0; i < cubosElevadores.Length; i++)
+            {
+                cubosElevadores[i].CerrarPuerta();
+            }
+            
             pivote.rotation = palancaDerecha;
         }
         else
         {
-            cuboElevador.AbrirPuerta();
+            for (int i = 0; i < cubosElevadores.Length; i++)
+            {
+                cubosElevadores[i].AbrirPuerta();
+            }
             
             pivote.rotation = palancaIzquierda;
         }

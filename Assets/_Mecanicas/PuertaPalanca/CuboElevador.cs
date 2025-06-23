@@ -6,15 +6,23 @@ public class CuboElevador : MonoBehaviour
     public Vector3 puntoFinal;
     private bool puertaAbierta;
     private bool playerInteractuando;
+    public bool actuarComoPuerta = true;
 
     private void Start()
     {
         PrenderTexto(false);
+        if (!actuarComoPuerta)
+        {
+            BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+            boxCollider2D.enabled = false;
+        }
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.F) && playerInteractuando)
+        if(!actuarComoPuerta) return;
+        
+        if (Input.GetKeyUp(KeyCode.F) && playerInteractuando && actuarComoPuerta)
         {
             Debug.Log("Usuario Presionó tecla F");
             
@@ -51,7 +59,7 @@ public class CuboElevador : MonoBehaviour
         if (puertaAbierta)
         {
             puertaAbierta = false;
-            texto.SetActive(false);
+            PrenderTexto(false);
             transform.position = transform.position - puntoFinal;
         }
     }
@@ -60,7 +68,11 @@ public class CuboElevador : MonoBehaviour
     {
         if (!puertaAbierta)
         {
-            texto.SetActive(prender);
+            //detectar si texto no esta seteado
+            if (texto != null)
+            {
+                texto.SetActive(prender);
+            }
         }
     }
 }
